@@ -1,6 +1,6 @@
 #include <iostream>
 #include <opencv2/imgcodecs.hpp>
-#include "rotate.h"
+#include "../include/rotate.h"
 
 int main()
 {
@@ -12,7 +12,7 @@ int main()
         std::cout << "图像读取失败!" << std::endl;
         exit(-1);
     }
-    std::cout<<src.size().width<<std::endl;
+    std::cout<<src.cols<<std::endl;
     cv::Mat ByOpenCV,ByMySelf;
     // OpenCVRotate(src, ByOpenCV, 45.0);
     // cv::imwrite("Rotated_By_OpenCV.jpg", ByOpenCV);
