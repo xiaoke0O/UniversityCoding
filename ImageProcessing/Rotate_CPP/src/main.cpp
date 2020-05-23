@@ -12,11 +12,13 @@ int main()
         std::cout << "图像读取失败!" << std::endl;
         exit(-1);
     }
-    std::cout<<src.cols<<std::endl;
+    std::cout<<"原始图像尺寸："<<src.size()<<std::endl;
     cv::Mat ByOpenCV,ByMySelf;
-    // OpenCVRotate(src, ByOpenCV, 45.0);
-    // cv::imwrite("Rotated_By_OpenCV.jpg", ByOpenCV);
+     OpenCVRotate(src, ByOpenCV, 30.0);
+     std::cout<<"OpenCV旋转后的尺寸："<<ByOpenCV.size()<<std::endl;
+     cv::imwrite("Rotated_By_OpenCV.jpg", ByOpenCV);
     MyRotate(src,ByMySelf,30.0,"LINE");
-    // cv::imwrite("Rotated_By_MySelf.jpg",ByMySelf);
+     std::cout<<"MySelf旋转后的尺寸："<<ByMySelf.size()<<std::endl;
+     cv::imwrite("Rotated_By_MySelf.jpg",ByMySelf);
     return 0;
 }
