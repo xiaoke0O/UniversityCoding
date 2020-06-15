@@ -20,11 +20,11 @@ int main()
 
     OpenCVRotate(src, ByOpenCV, 45.0);
     std::cout << "OpenCV旋转后的尺寸：" << ByOpenCV.size() << std::endl;
-    cv::imwrite("Rotated_By_OpenCV.jpg", ByOpenCV);
+    cv::imwrite("Rotated_By_OpenCV.jpg", ByOpenCV);                         //将结果输出到文件
 
-    MyRotate(src, ByMySelf, 49.0, "LINE");
+    MyRotate(src, ByMySelf, 45.0);                                          //速度比OpenCV慢多了
     std::cout << "MySelf旋转后的尺寸：" << ByMySelf.size() << std::endl;
-    cv::imwrite("Rotated_By_MySelf.jpg", ByMySelf);
+    cv::imwrite("Rotated_By_MySelf.jpg", ByMySelf);                         //将结果输出到文件
     
     return 0;
 }
