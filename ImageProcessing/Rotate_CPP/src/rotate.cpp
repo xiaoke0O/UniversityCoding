@@ -13,7 +13,7 @@ void OpenCVRotate(cv::Mat &img, cv::Mat &dst, double degree)
     rotm.at<double>(0, 2) += (bbox.width / 2.0 - center.x);
     rotm.at<double>(1, 2) += (bbox.height / 2.0 - center.y);
     // std::cout<<"修正后Opencv旋转矩阵"<<rotm<<std::endl;
-    cv::warpAffine(img, dst, rotm, bbox.size(), cv::INTER_LINEAR);
+    cv::warpAffine(img, dst, rotm, bbox.size(), cv::INTER_LINEAR, 0, cv::Scalar(255, 255, 255));
 }
 
 /*自制的旋转操作*/
@@ -71,24 +71,49 @@ void MyRotate(cv::Mat &img, cv::Mat &dst, double degree, std::string method)
     {
         for (int j = 0; j < nH; j++)
         {
-
             cv::Mat dstPoint = (cv::Mat_<float>(2, 1) << i, j);
             cv::Mat T;
             T = A.t() * (dstPoint - B);
-            cv::Point2i PointDone;
-            PointDone.x = std::round(T.at<float>(0, 0));
-            PointDone.y = std::round(T.at<float>(1, 0));
+            /*四邻域点
+            A-B
+            | |
+            D-C
+            */
+            cv::Point2f pointDone(T.at<float>(0, 0), T.at<float>(1, 0));
+            cv::Point2i pointDoneA(int(pointDone.x), int(pointDone.y));
+            cv::Point2i pointDoneB = pointDoneA + cv::Point2i(1, 0);
+            cv::Point2i pointDoneC = pointDoneA + cv::Point2i(1, 1);
+            cv::Point2i pointDoneD = pointDoneA + cv::Point2i(0, 1);
 
-            // std::cout << "Heaaaaaaaaaaaa" << std::endl;
+            /*四邻域像素值*/
 
-            if (PointDone.x >= 0 && PointDone.y >= 0 && PointDone.x <= w && PointDone.y <= h)
+            /*小数部分*/
+            float u = pointDone.x - pointDoneA.x;
+            float v = pointDone.y - pointDoneA.y;
+
+            cv::Vec3b pixelValues;
+
+            if (pointDoneA.x >= 0 && pointDoneA.y >= 0 && pointDoneC.x <= w && pointDoneC.y <= h)
             {
-                dst.at<cv::Vec3b>(cv::Point(i, j)) = img.at<cv::Vec3b>(PointDone);
+                if (pointDone.x - pointDoneA.x < 0.001 && pointDone.y - pointDoneA.y < 0.001)
+                {
+                    pixelValues = img.at<cv::Vec3b>(pointDoneA);
+                }
+                else
+                {
+                    cv::Vec3b pixelPointA = img.at<cv::Vec3b>(pointDoneA);
+                    cv::Vec3b pixelPointB = img.at<cv::Vec3b>(pointDoneB);
+                    cv::Vec3b pixelPointC = img.at<cv::Vec3b>(pointDoneC);
+                    cv::Vec3b pixelPointD = img.at<cv::Vec3b>(pointDoneD);
+                    // std::cout << "Heaaaaaaaaaaaa" << std::endl;
+                    pixelValues = (1 - u) * (1 - v) * pixelPointA + (1 - u) * v * pixelPointB + u * v * pixelPointC + u * (1 - v) * pixelPointD;
+                }
             }
             else
             {
-                dst.at<cv::Vec3b>(cv::Point(i, j)) = cv::Vec3b(0, 0, 0);
+                pixelValues = cv::Vec3b(255, 255, 255);
             }
+            dst.at<cv::Vec3b>(cv::Point(i, j)) = pixelValues;
         }
     }
 }

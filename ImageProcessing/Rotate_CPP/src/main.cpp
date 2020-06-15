@@ -22,7 +22,7 @@ int main()
     std::cout << "OpenCV旋转后的尺寸：" << ByOpenCV.size() << std::endl;
     cv::imwrite("Rotated_By_OpenCV.jpg", ByOpenCV);
 
-    MyRotate(src, ByMySelf, 45.0, "LINE");
+    MyRotate(src, ByMySelf, 49.0, "LINE");
     std::cout << "MySelf旋转后的尺寸：" << ByMySelf.size() << std::endl;
     cv::imwrite("Rotated_By_MySelf.jpg", ByMySelf);
     
