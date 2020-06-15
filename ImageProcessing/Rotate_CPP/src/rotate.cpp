@@ -74,7 +74,7 @@ void MyRotate(cv::Mat &img, cv::Mat &dst, double degree)
             cv::Mat dstPoint = (cv::Mat_<float>(2, 1) << i, j);
             cv::Mat T;
             /*反算原图像位置*/
-            T = A.t() * (dstPoint - B);
+            T = A * (dstPoint - B);
             /*四邻域点
             0————-->x
             | A——B
