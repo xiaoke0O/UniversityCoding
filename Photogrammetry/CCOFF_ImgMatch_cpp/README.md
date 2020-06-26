@@ -2,6 +2,10 @@
 
 ### 基于OpenCV的相关系数法影像匹配
 
+#### 运行结果
+
+![运行结果](https://pic.downk.cc/item/5ef35f8814195aa594d7a50a.png)
+
 #### 处理流程
 
 ```mermaid
@@ -24,9 +28,9 @@ h[确定出最大值搜索窗口的左上角值]
 i[标记出最大值窗口]
 g-->h
 h-->i
-
 ```
-![](https://pic.downk.cc/item/5eb42828c2a9a83be59b688f.png)
+
+![流程图](https://pic.downk.cc/item/5eb42828c2a9a83be59b688f.png)
 
 #### 依赖项
 
