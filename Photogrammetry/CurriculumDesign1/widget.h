@@ -4,6 +4,7 @@
 #include <QLineEdit>
 #include <QPushButton>
 #include <QTextBrowser>
+#include <Eigen/Geometry>
 class widget : public QWidget
 {
 public:
@@ -17,6 +18,7 @@ private:
 
 private:
     void createWidget();
+    Eigen::Matrix3d getRotateMatrix3d(double varphi,double omega,double kappa);
 
 private slots:
     void doCalculation();
