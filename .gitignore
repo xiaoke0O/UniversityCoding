@@ -2,5 +2,11 @@ cmake-build-debug/
 .idea/
 build-*/
 build/
-.vscode/
 .vs
+
+# vscode 
+.vscode/
+*.exe
+*.ilk
+*.obj
+*.pdb
